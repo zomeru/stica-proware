@@ -15,12 +15,12 @@ const linking: LinkingOptions<RootStackParamList> = {
     screens: {
       Root: {
         screens: {
-          TabOne: {
+          Login: {
             screens: {
               TabOneScreen: 'one',
             },
           },
-          TabTwo: {
+          Register: {
             screens: {
               TabTwoScreen: 'two',
             },
