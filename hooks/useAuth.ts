@@ -56,9 +56,12 @@ const useAuth = () => {
       .catch(loginError => {
         const errorMessage = loginError.message;
 
+        console.log('loginError', loginError);
+
         if (
           errorMessage.includes('user-not-found') ||
-          errorMessage.includes('invalid-email')
+          errorMessage.includes('invalid-email') ||
+          errorMessage.includes('wrong-password')
         ) {
           Toast.show({
             type: 'error',

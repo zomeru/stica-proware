@@ -1,14 +1,10 @@
 import React from 'react';
-import { Image, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, Pressable, StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { useUser } from '../contexts/UserContext';
 
-import useAuth from '../hooks/useAuth';
-
-export default function HomeScreen({ navigation }: any) {
-  const { logout } = useAuth();
-
+export default function CreateAppointmentScreen({ navigation }: any) {
   const { user } = useUser();
 
   return (
@@ -21,23 +17,9 @@ export default function HomeScreen({ navigation }: any) {
         }}
         source={require('../assets/images/logo.jpg')}
       />
-      <Text style={styles.title}>Hello! Welcome to STICA Proware</Text>
+      <Text style={styles.title}>Create Appointment</Text>
       <Text style={styles.screenTitle}>Full name: {user.fullName}</Text>
       <Text style={styles.screenTitle}>Student ID: {user.studentId}</Text>
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('CreateAppointment')}
-      >
-        <Text style={styles.textCenter}>Create Appointment</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('ViewAppointment')}
-      >
-        <Text style={styles.textCenter}>View Appointment</Text>
-      </TouchableOpacity>
 
       <Pressable
         style={{
@@ -45,7 +27,7 @@ export default function HomeScreen({ navigation }: any) {
           flexDirection: 'row',
           marginTop: 50,
         }}
-        onPress={() => logout()}
+        onPress={() => navigation.goBack()}
       >
         <Text
           style={{
@@ -54,7 +36,7 @@ export default function HomeScreen({ navigation }: any) {
             fontSize: 20,
           }}
         >
-          Logout
+          Go back
         </Text>
       </Pressable>
     </View>

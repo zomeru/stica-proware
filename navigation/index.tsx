@@ -3,12 +3,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 
 import { UserProvider, useUser } from '../contexts/UserContext';
+import CreateAppointmentScreen from '../screens/CreateAppointmentScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/LoginScreen';
 
 import RegisterScreen from '../screens/RegisterScreen';
+import ViewAppointmentScreen from '../screens/ViewAppointmentScreen';
 
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -30,8 +32,6 @@ const Stack = createNativeStackNavigator();
 function RootNavigator() {
   const { user } = useUser();
 
-  console.log('user', user);
-
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {user ? (
@@ -39,6 +39,16 @@ function RootNavigator() {
           <Stack.Screen
             name='Home'
             component={HomeScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='CreateAppointment'
+            component={CreateAppointmentScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='ViewAppointment'
+            component={ViewAppointmentScreen}
             options={{ headerShown: false }}
           />
         </Stack.Group>
