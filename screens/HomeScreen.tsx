@@ -1,10 +1,14 @@
 import { Button, StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
+import { useUser } from '../contexts/UserContext';
 import useAuth from '../hooks/useAuth';
 
 export default function HomeScreen({ navigation }: any) {
   const { logout } = useAuth();
+  const { user } = useUser();
+
+  console.log('user', user);
 
   return (
     <View style={styles.container}>

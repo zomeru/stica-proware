@@ -1,7 +1,9 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
+
 import { UserProvider, useUser } from '../contexts/UserContext';
+import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/LoginScreen';
@@ -26,10 +28,8 @@ export default function Navigation() {
 const Stack = createNativeStackNavigator();
 
 function RootNavigator() {
-  const userLoggedIn = false;
   const { user } = useUser();
 
-  console.log('userLoggedIn', userLoggedIn);
   console.log('user', user);
 
   return (
@@ -46,6 +46,10 @@ function RootNavigator() {
         <Stack.Group>
           <Stack.Screen name='Login' component={LoginScreen} />
           <Stack.Screen name='Register' component={RegisterScreen} />
+          <Stack.Screen
+            name='ForgotPassword'
+            component={ForgotPasswordScreen}
+          />
         </Stack.Group>
       )}
     </Stack.Navigator>

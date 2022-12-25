@@ -9,12 +9,21 @@ import {
   Dispatch,
   SetStateAction,
 } from 'react';
-import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from '../utils/database';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth, db } from '../utils/database';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+
+export interface UserDoc {
+  id: string;
+  uid: string;
+  email: string;
+  studentId: string;
+  fullName: string;
+}
 
 export interface UserContextProps {
-  user: User;
-  setUser: Dispatch<SetStateAction<User>>;
+  user: UserDoc;
+  setUser: Dispatch<SetStateAction<UserDoc>>;
   loading: boolean;
 }
 
@@ -31,13 +40,26 @@ interface UserProviderProps {
 }
 
 export const UserProvider: FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User>(null as unknown as User);
+  const [user, setUser] = useState<UserDoc>(null as unknown as UserDoc);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, currentUser => {
+    const unsubscribe = onAuthStateChanged(auth, async currentUser => {
       if (currentUser) {
-        setUser(currentUser);
+        const q = query(
+          collection(db, 'users'),
+          where('email', '==', currentUser.email)
+        );
+
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const userDoc = {
+            id: querySnapshot.docs[0].id,
+            ...querySnapshot.docs[0].data(),
+          } as UserDoc;
+          setUser(userDoc);
+        }
       }
 
       setLoading(false);

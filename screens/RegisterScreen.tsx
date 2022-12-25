@@ -7,20 +7,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {
-  FIREBASE_API_KEY,
-  FIREBASE_APP_ID,
-  FIREBASE_AUTH_DOMAIN,
-  FIREBASE_MESSAGING_SENDER_ID,
-  FIREBASE_PROJECT_ID,
-  FIREBASE_STORAGE_BUCKET,
-} from '@env';
-
 import { Text, View } from '../components/Themed';
 import useAuth from '../hooks/useAuth';
 
 export default function LoginScreen({ navigation }: any) {
   const [email, onChangeEmail] = useState('');
+  const [studentId, onChangeStudentId] = useState('');
+  const [fullName, onChangeFullName] = useState('');
   const [password, onChangePassword] = useState('');
   const [confirmPassword, onChangeConfirmPassword] = useState('');
 
@@ -31,7 +24,7 @@ export default function LoginScreen({ navigation }: any) {
       {/* Add logo image */}
       <Image
         style={{
-          width: 250,
+          width: '80%',
           height: 250,
         }}
         source={require('../assets/images/logo.jpg')}
@@ -43,6 +36,18 @@ export default function LoginScreen({ navigation }: any) {
         onChangeText={onChangeEmail}
         value={email}
         placeholder='Email'
+      />
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangeStudentId}
+        value={studentId}
+        placeholder='Student ID'
+      />
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangeFullName}
+        value={fullName}
+        placeholder='Full Name'
       />
       <TextInput
         style={styles.input}
@@ -61,7 +66,15 @@ export default function LoginScreen({ navigation }: any) {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => register(email, password, confirmPassword)}
+        onPress={() =>
+          register({
+            email,
+            studentId,
+            fullName,
+            password,
+            confirmPassword,
+          })
+        }
       >
         <Text style={styles.textCenter}>Register</Text>
       </TouchableOpacity>

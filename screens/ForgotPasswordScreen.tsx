@@ -8,14 +8,12 @@ import {
 } from 'react-native';
 
 import { Text, View } from '../components/Themed';
-
 import useAuth from '../hooks/useAuth';
 
-export default function LoginScreen({ navigation }: any) {
+export default function ForgotPasswordScreen({ navigation }: any) {
   const [email, onChangeEmail] = useState('');
-  const [password, onChangePassword] = useState('');
 
-  const { login } = useAuth();
+  const { resetPassword, hasResetError } = useAuth();
 
   return (
     <View style={styles.container}>
@@ -28,50 +26,35 @@ export default function LoginScreen({ navigation }: any) {
         source={require('../assets/images/logo.jpg')}
       />
       <Text style={styles.title}>Hello! Welcome to STICA Proware</Text>
-      <Text style={styles.screenTitle}>Log in</Text>
+      <Text style={styles.screenTitle}>Reset Password</Text>
       <TextInput
         style={styles.input}
         onChangeText={onChangeEmail}
         value={email}
         placeholder='Email'
       />
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangePassword}
-        value={password}
-        placeholder='Password'
-        secureTextEntry
-      />
 
       <TouchableOpacity
-        style={{
-          width: '80%',
-          marginBottom: 10,
-        }}
-        onPress={() => navigation.navigate('ForgotPassword')}
-      >
-        <Text style={styles.forgotPassword}>Forgot password?</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
         style={styles.button}
-        onPress={() => login(email, password)}
-      >
-        <Text style={styles.textCenter}>Log in</Text>
-      </TouchableOpacity>
-      {/* <TouchableOpacity
-        style={[styles.button, { backgroundColor: '#EB4626' }]}
         onPress={() => {
+          resetPassword(email);
+
+          setTimeout(() => {
+            if (!hasResetError) {
+              onChangeEmail('');
+            }
+          }, 400);
         }}
       >
-        <Text style={styles.textCenter}>Log in with STI O365</Text>
-      </TouchableOpacity> */}
+        <Text style={styles.textCenter}>Reset Password</Text>
+      </TouchableOpacity>
       <Pressable
         style={{
           display: 'flex',
           flexDirection: 'row',
           marginTop: 50,
         }}
-        onPress={() => navigation.navigate('Register')}
+        onPress={() => navigation.navigate('Login')}
       >
         <Text
           style={{
@@ -80,7 +63,7 @@ export default function LoginScreen({ navigation }: any) {
             marginRight: 5,
           }}
         >
-          Don't have an account?
+          Already reset your password?
         </Text>
         <Text
           style={{
@@ -88,7 +71,7 @@ export default function LoginScreen({ navigation }: any) {
             color: '#30A9DE',
           }}
         >
-          Register
+          Login
         </Text>
       </Pressable>
     </View>
